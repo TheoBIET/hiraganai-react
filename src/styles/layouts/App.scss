@@ -1,23 +1,19 @@
 .App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+
+  &__title {
+    margin-bottom: $gutter;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 2rem;
 
     h1 {
-        font-size: 5rem;
-        font-weight: bold;
+      font-size: 5rem;
+      font-weight: bold;
     }
-
-    .container {
-        &__drawer {
-            div {
-                border-radius: 20px;
-            }
-            canvas {
-                border-radius: 20px;
-            }
-        }
-    }
+  }
 }

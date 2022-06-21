@@ -1,0 +1,74 @@
+.Learning {
+  &__progress {
+    width: 80%;
+    margin: auto;
+    margin-bottom: $gutter;
+    border-radius: 5px;
+
+    &__bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 4px;
+      background-color: $white;
+      position: relative;
+
+      &__fill {
+        position: absolute;
+        height: 100%;
+        background-color: $red;
+        z-index: 1;
+      }
+
+      &__item {
+        width: 8px;
+        height: 8px;
+        background-color: $white;
+        border: 1px solid #d1d1d1;
+        border-radius: 50px;
+        z-index: 2;
+
+        &.--active {
+          background-color: $red;
+          border: 1px solid $red;
+        }
+      }
+    }
+  }
+
+  &__drawer {
+    position: relative;
+
+    div {
+      border-radius: 20px;
+    }
+
+    canvas {
+      border-radius: 20px;
+    }
+
+    &__example {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 350px;
+      font-family: $japanese;
+      font-weight: thin;
+      color: #00000020;
+    }
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: calc($gutter / 2);
+    margin: calc($gutter / 3) 0;
+
+    &.mt  {
+      margin-top: $gutter;
+    }
+  }
+}

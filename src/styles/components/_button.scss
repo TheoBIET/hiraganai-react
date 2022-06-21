@@ -1,0 +1,96 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc($gutter / 1.5) $gutter;
+  background-color: var(--white);
+  border-radius: 15px;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+
+  &.disabled {
+    cursor: not-allowed;
+    &:hover,
+    &:active {
+      transform: none !important;
+      box-shadow: none !important;
+    }
+  }
+
+  &:active {
+    transform: scale(0.9);
+    box-shadow: none;
+  }
+
+  &.red {
+    background-color: $red;
+    color: $white;
+
+    &:hover,
+    &:active {
+      box-shadow: 0 10px 20px -10px rgba($red, 1);
+      transform: translate(0, -3px);
+    }
+
+    &.outlined {
+      background-color: $white;
+      border: 1px solid $red;
+      color: $red;
+    }
+  }
+
+  &.yellow {
+    background-color: $yellow;
+    color: $white;
+
+    &:hover,
+    &:active {
+      box-shadow: 0 10px 20px -10px rgba($yellow, 1);
+      transform: translate(0, -3px);
+    }
+
+    &.outlined {
+      background-color: var(--white);
+      border: 1px solid $yellow;
+      color: $yellow;
+
+      &:hover,
+      &:active {
+        box-shadow: 0 10px 20px -10px rgba($yellow, 1);
+      }
+    }
+  }
+
+  &.pink {
+    background-color: $pink;
+    color: $white;
+
+    &:hover,
+    &:active {
+      box-shadow: 0 10px 20px -10px rgba($pink, 1);
+      transform: translate(0, -3px);
+    }
+
+    &.outlined {
+      background-color: var(--white);
+      border: 1px solid $pink;
+      color: $pink;
+
+      &:hover,
+      &:active {
+        box-shadow: 0 10px 20px -10px rgba($pink, 1);
+      }
+    }
+  }
+
+  &.blue {
+    background-color: $blue;
+    color: $white;
+
+    &:hover,
+    &:active {
+      box-shadow: 0 10px 20px -10px rgba($blue, 1);
+      transform: translate(0, -3px);
+    }
+  }
+}
