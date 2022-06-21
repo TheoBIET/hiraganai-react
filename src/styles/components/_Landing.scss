@@ -1,0 +1,110 @@
+.Landing {
+  flex: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
+
+  &__title {
+    margin-bottom: $gutter;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: calc($gutter * 3);
+
+    h1 {
+      font-size: 5rem;
+      font-weight: bold;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $gutter;
+    flex: 2;
+
+    &__link {
+      width: 80%;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      background: $red;
+      color: $white;
+      padding: calc($gutter * 2) $gutter;
+      border-radius: 20px;
+
+      &:hover {
+        transform: scale(1.01) translateY(-5px);
+      }
+
+      &.--disabled {
+        background: #6f6f6f;
+        color: #909090;
+        cursor: not-allowed;
+
+        &:hover {
+          transform: none;
+        }
+      }
+    }
+  }
+
+  &__footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc($gutter / 2);
+    background: black;
+    padding: calc($gutter * 2) $gutter;
+
+    p {
+      color: $white;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    &__socials {
+      display: flex;
+      gap: $gutter;
+      flex: 2;
+
+      &__item {
+        width: 30px;
+        height: 30px;
+        border-radius: 10px;
+        background: $white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $white;
+        transition: all 0.3s ease-in-out;
+
+        &.--linkedin {
+          background: #0077b5;
+        }
+
+        &.--github {
+          background: #24292e;
+        }
+
+        &.--twitter {
+          background: #1da1f2;
+        }
+
+        &.--source {
+          background: $yellow;
+          color: $black;
+        }
+
+        &:hover {
+          transform: scale(1.01) translateY(-5px);
+        }
+      }
+    }
+  }
+}

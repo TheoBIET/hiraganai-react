@@ -1,15 +1,21 @@
-import Learning from "./components/Learning";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-function App() {
+import Landing from "./components/Landing";
+import Learning from "./components/Learning";
+import Find from "./components/Find";
+import Discover from "./components/Discover";
+
+export default function App() {
   return (
     <div className="App">
-      <div className="App__title">
-        <h1>Nihongo</h1>
-        <p>Learn Japanese Alphabet with AI</p>
-      </div>
-      <Learning />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/learning" element={<Learning />} />
+          <Route path="/find" element={<Find />} />
+          <Route path="/discover" element={<Discover />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
-
-export default App;
