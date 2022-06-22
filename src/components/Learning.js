@@ -1,29 +1,29 @@
 import { useRef, useState } from "react";
 import useWindowSize from "react-use/lib/useWindowSize";
 import { useStopwatch } from "react-timer-hook";
+import Sound from "react-sound";
 
 import { FaEraser, FaUndo, FaBug, FaPause, FaStar } from "react-icons/fa";
+import { AiFillSound } from "react-icons/ai";
 import Confetti from "react-confetti";
 import CanvasDraw from "react-canvas-draw";
 import axios from "axios";
 
 import PauseMenu from "./PauseMenu";
-
 import DataURIToBlob from "../utils/blob";
-import HIRAGANA from "../constants/hiragana";
+import CONSTANTS from "../constants";
+
+const { SCORE_TABLE, HIRAGANA } = CONSTANTS;
 const [phonetics, hiraganas] = [Object.keys(HIRAGANA), Object.values(HIRAGANA)];
 const BASE_URL = "https://hiraganai-api.herokuapp.com/api/v1";
 const PREDICT_URL = `${BASE_URL}/predict`;
-const SCORE_TABLE = {
-  0: 3,
-  1: 2,
-  2: 1,
-};
 
 function Learning() {
-  const { width, height } = useWindowSize();
+  // Refs
   const canvasDraw = useRef(null);
   const confetti = useRef(null);
+
+  // States
   const [isSuccess, setIsSuccess] = useState(false);
   const [isWrong, setIsWrong] = useState(false);
   const [lastPrediction, setLastPrediction] = useState(null);
@@ -32,6 +32,10 @@ function Learning() {
   const [score, setScore] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [isLetterHidden, setIsLetterHidden] = useState(false);
+  const [isSoundOn, setIsSoundOn] = useState(false);
+
+  // Hooks
+  const { width, height } = useWindowSize();
   const { seconds, minutes, pause, start, reset } = useStopwatch({
     autoStart: true,
   });
@@ -42,6 +46,10 @@ function Learning() {
 
   const clear = () => {
     canvasDraw.current.clear();
+  };
+
+  const setSoundOn = () => {
+    setIsSoundOn(true);
   };
 
   const runConfetti = () => {
@@ -65,6 +73,7 @@ function Learning() {
 
     if (currentIndex < hiraganas.length - 1) {
       setCurrentIndex(currentIndex + 1);
+      setIsSoundOn(true);
     }
 
     if (currentIndex === hiraganas.length - 1) {
@@ -137,12 +146,22 @@ function Learning() {
         />
       )}
       {/****************************/}
+
       {/********* CONFETTI *********/}
       <Confetti
         numberOfPieces={isSuccess ? 200 : 0}
         ref={confetti}
         width={width}
         height={height}
+      />
+      {/****************************/}
+
+      {/********* LETTER SOUND *********/}
+      <Sound
+        url={require(`../assets/sounds/${phonetics[currentIndex]}.mp3`)}
+        playStatus={isSoundOn ? Sound.status.PLAYING : Sound.status.PAUSED}
+        onFinishedPlaying={() => setIsSoundOn(false)}
+        onError={(error) => setIsSoundOn(true)}
       />
       {/****************************/}
 
@@ -176,6 +195,7 @@ function Learning() {
       </div>
       {/** LEARNING HEADER END */}
 
+      {/** LEARNING BODY */}
       <div className={`Learning__drawer ${isWrong ? "--wrong" : ""}`}>
         <div className="Learning__drawer__info">
           <div>
@@ -190,6 +210,11 @@ function Learning() {
           <div className="Learning__drawer__wrapper__example">
             {isLetterHidden ? "" : `${hiraganas[currentIndex]}`}
           </div>
+          <div
+            className="Learning__drawer__wrapper__sound"
+            onClick={setSoundOn}>
+            <AiFillSound />
+          </div>
           <CanvasDraw ref={canvasDraw} brushColor="black" lazyRadius={0} />
         </div>
         <div className="Learning__drawer__progress">
@@ -201,22 +226,20 @@ function Learning() {
               }}
             />
             {phonetics.map((_, index) => {
-              if (index % 3 === 0) {
-                return (
-                  <div
-                    key={index}
-                    className={`Learning__drawer__progress__bar__item ${
-                      currentIndex >= index ? "--active" : ""
-                    }`}></div>
-                );
-              }
-
-              return null;
+              return index % 3 === 0 ? (
+                <div
+                  key={index}
+                  className={`Learning__drawer__progress__bar__item ${
+                    currentIndex >= index ? "--active" : ""
+                  }`}></div>
+              ) : null;
             })}
           </div>
         </div>
       </div>
+      {/** LEARNING BODY END */}
 
+      {/** LEARNING FOOTER */}
       <div className="Learning__actions">
         <div className="Learning__actions__row">
           <div className="button blue" onClick={undo}>
@@ -243,6 +266,7 @@ function Learning() {
           </div>
         </div>
       </div>
+      {/** LEARNING FOOTER END */}
     </div>
   );
 }

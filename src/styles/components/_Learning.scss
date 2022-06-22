@@ -67,7 +67,7 @@
       position: relative;
       width: 100%;
 
-      div:nth-child(2) {
+      canvas:nth-child(1) {
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
       }
 
@@ -78,6 +78,23 @@
 
       canvas {
         border-radius: 20px;
+      }
+
+      &__sound {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: $purple;
+        color: $white;
+        font-size: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 99999;
+        cursor: pointer;
       }
 
       &__example {
