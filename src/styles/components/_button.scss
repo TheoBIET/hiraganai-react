@@ -141,4 +141,26 @@
       }
     }
   }
+
+  &.purple {
+    background-color: $purple;
+    color: $white;
+
+    &:hover,
+    &:active {
+      box-shadow: 0 10px 20px -10px rgba($purple, 1);
+      transform: translate(0, -3px);
+    }
+
+    &.outlined {
+      background-color: var(--white);
+      border: 1px solid $purple;
+      color: $purple;
+
+      &:hover,
+      &:active {
+        box-shadow: 0 10px 20px -10px rgba($purple, 1);
+      }
+    }
+  }
 }

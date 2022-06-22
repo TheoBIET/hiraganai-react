@@ -1,5 +1,4 @@
 .Learning {
-  width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -51,6 +50,7 @@
     align-items: center;
     width: 100%;
     flex: 2;
+    justify-content: center;
 
     &.--wrong {
       animation: shake 0.3s ease-in-out;
@@ -85,7 +85,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        font-size: calc($gutter * 10);
+        font-size: 300px;
         font-family: $japanese;
         font-weight: thin;
         color: #00000020;

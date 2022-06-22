@@ -7,6 +7,8 @@ import Confetti from "react-confetti";
 import CanvasDraw from "react-canvas-draw";
 import axios from "axios";
 
+import PauseMenu from "./PauseMenu";
+
 import DataURIToBlob from "../utils/blob";
 import HIRAGANA from "../constants/hiragana";
 const [phonetics, hiraganas] = [Object.keys(HIRAGANA), Object.values(HIRAGANA)];
@@ -28,7 +30,9 @@ function Learning() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [failureCount, setFailureCount] = useState(0);
   const [score, setScore] = useState(0);
-  const { seconds, minutes, pause } = useStopwatch({
+  const [isPaused, setIsPaused] = useState(false);
+  const [isLetterHidden, setIsLetterHidden] = useState(false);
+  const { seconds, minutes, pause, start, reset } = useStopwatch({
     autoStart: true,
   });
 
@@ -45,11 +49,11 @@ function Learning() {
 
     setTimeout(() => {
       passToNext();
-    }, 1000);
+    }, 500);
 
     setTimeout(() => {
       setIsSuccess(false);
-    }, 2000);
+    }, 1000);
   };
 
   const passToNext = () => {
@@ -96,8 +100,43 @@ function Learning() {
     setFailureCount(failureCount + 1);
   };
 
+  const handlePause = (value) => {
+    setIsPaused(value);
+
+    if (value) {
+      return pause();
+    }
+
+    start();
+  };
+
+  const handleHideLetter = () => {
+    setIsLetterHidden(!isLetterHidden);
+  };
+
+  const restart = () => {
+    setIsPaused(false);
+    setIsSuccess(false);
+    setIsWrong(false);
+    setFailureCount(0);
+    setScore(0);
+    setCurrentIndex(0);
+    clear();
+    reset();
+  };
+
   return (
-    <div className="Learning">
+    <div className={`Learning ${isPaused ? "--no-scroll" : ""}`}>
+      {/******** PAUSE MENU ********/}
+      {isPaused && (
+        <PauseMenu
+          handlePause={handlePause}
+          restart={restart}
+          handleHideLetter={handleHideLetter}
+          isLetterHidden={isLetterHidden}
+        />
+      )}
+      {/****************************/}
       {/********* CONFETTI *********/}
       <Confetti
         numberOfPieces={isSuccess ? 200 : 0}
@@ -111,7 +150,11 @@ function Learning() {
       <div className="Learning__header">
         <div className="Learning__header__row">
           <div className="Learning__header__row__pause">
-            <FaPause />
+            <FaPause
+              onClick={() => {
+                handlePause(true);
+              }}
+            />
           </div>
           <div className="Learning__header__row__timer">
             {minutes.toLocaleString("en-US", {
@@ -135,20 +178,19 @@ function Learning() {
 
       <div className={`Learning__drawer ${isWrong ? "--wrong" : ""}`}>
         <div className="Learning__drawer__info">
-          <div>Target: {hiraganas[currentIndex]}</div>
+          <div>
+            Target:{" "}
+            {isLetterHidden
+              ? `? (${phonetics[currentIndex]})`
+              : `${hiraganas[currentIndex]} (${phonetics[currentIndex]})`}
+          </div>
           <div>Predict: {lastPrediction ?? "?"}</div>
         </div>
         <div className="Learning__drawer__wrapper">
           <div className="Learning__drawer__wrapper__example">
-            {hiraganas[currentIndex]}
+            {isLetterHidden ? "" : `${hiraganas[currentIndex]}`}
           </div>
-          <CanvasDraw
-            ref={canvasDraw}
-            brushColor="black"
-            lazyRadius={0}
-            canvasWidth={width / 1.2}
-            canvasHeight={width / 1.2}
-          />
+          <CanvasDraw ref={canvasDraw} brushColor="black" lazyRadius={0} />
         </div>
         <div className="Learning__drawer__progress">
           <div className="Learning__drawer__progress__bar">
@@ -189,6 +231,7 @@ function Learning() {
             </div>
           )}
         </div>
+
         <div className="Learning__actions__row">
           {failureCount > 2 && (
             <div className="button yellow" onClick={passToNext}>
