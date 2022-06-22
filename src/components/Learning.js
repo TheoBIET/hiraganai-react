@@ -27,12 +27,13 @@ function Learning() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isWrong, setIsWrong] = useState(false);
   const [lastPrediction, setLastPrediction] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(45);
   const [failureCount, setFailureCount] = useState(0);
   const [score, setScore] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [isLetterHidden, setIsLetterHidden] = useState(false);
   const [isSoundOn, setIsSoundOn] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
 
   // Hooks
   const { width, height } = useWindowSize();
@@ -77,6 +78,7 @@ function Learning() {
     }
 
     if (currentIndex === hiraganas.length - 1) {
+      setIsFinished(true);
       pause();
     }
   };
@@ -124,6 +126,7 @@ function Learning() {
   };
 
   const restart = () => {
+    setIsFinished(false);
     setIsPaused(false);
     setIsSuccess(false);
     setIsWrong(false);
@@ -137,19 +140,29 @@ function Learning() {
   return (
     <div className={`Learning ${isPaused ? "--no-scroll" : ""}`}>
       {/******** PAUSE MENU ********/}
-      {isPaused && (
+      {(isPaused || isFinished) && (
         <PauseMenu
           handlePause={handlePause}
           restart={restart}
           handleHideLetter={handleHideLetter}
           isLetterHidden={isLetterHidden}
+          isFinished={isFinished}
+          time={`${minutes.toLocaleString("en-US", {
+            minimumIntegerDigits: 2,
+            useGrouping: false,
+          })}:${seconds.toLocaleString("en-US", {
+            minimumIntegerDigits: 2,
+            useGrouping: false,
+          })}`}
+          score={score}
+          maxScore={hiraganas.length * 3}
         />
       )}
       {/****************************/}
 
       {/********* CONFETTI *********/}
       <Confetti
-        numberOfPieces={isSuccess ? 200 : 0}
+        numberOfPieces={isSuccess || isFinished ? 200 : 0}
         ref={confetti}
         width={width}
         height={height}
@@ -161,7 +174,7 @@ function Learning() {
         url={require(`../assets/sounds/${phonetics[currentIndex]}.mp3`)}
         playStatus={isSoundOn ? Sound.status.PLAYING : Sound.status.PAUSED}
         onFinishedPlaying={() => setIsSoundOn(false)}
-        onError={(error) => setIsSoundOn(true)}
+        onError={() => setIsSoundOn(true)}
       />
       {/****************************/}
 

@@ -5,6 +5,11 @@
   display: flex;
   flex-direction: column;
   padding-top: 2rem;
+  width: 30vw;
+
+  @include mobTab() {
+    width: 100%;
+  }
 
   &__title {
     margin-bottom: $gutter;
@@ -25,6 +30,7 @@
     align-items: center;
     gap: $gutter;
     flex: 2;
+    min-height: 70vh;
 
     &__link {
       width: 80%;
