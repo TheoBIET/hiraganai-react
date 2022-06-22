@@ -27,7 +27,7 @@ function Learning() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isWrong, setIsWrong] = useState(false);
   const [lastPrediction, setLastPrediction] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(45);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [failureCount, setFailureCount] = useState(0);
   const [score, setScore] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
