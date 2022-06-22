@@ -17,6 +17,10 @@
     }
   }
 
+  &.little {
+    padding: calc($gutter / 2) calc($gutter / 2);
+  }
+
   &:active {
     transform: scale(0.9);
     box-shadow: none;
@@ -112,6 +116,28 @@
       &:hover,
       &:active {
         box-shadow: 0 10px 20px -10px rgba($green, 1);
+      }
+    }
+  }
+
+  &.camel {
+    background-color: $camel;
+    color: $white;
+
+    &:hover,
+    &:active {
+      box-shadow: 0 10px 20px -10px rgba($camel, 1);
+      transform: translate(0, -3px);
+    }
+
+    &.outlined {
+      background-color: var(--white);
+      border: 1px solid $camel;
+      color: $camel;
+
+      &:hover,
+      &:active {
+        box-shadow: 0 10px 20px -10px rgba($camel, 1);
       }
     }
   }

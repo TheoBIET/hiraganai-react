@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import useWindowSize from "react-use/lib/useWindowSize";
 import { useStopwatch } from "react-timer-hook";
 
-import { FaEraser, FaUndo, FaBug } from "react-icons/fa";
+import { FaEraser, FaUndo, FaBug, FaPause, FaStar } from "react-icons/fa";
 import Confetti from "react-confetti";
 import CanvasDraw from "react-canvas-draw";
 import axios from "axios";
@@ -13,8 +13,8 @@ const [phonetics, hiraganas] = [Object.keys(HIRAGANA), Object.values(HIRAGANA)];
 const BASE_URL = "https://hiraganai-api.herokuapp.com/api/v1";
 const PREDICT_URL = `${BASE_URL}/predict`;
 const SCORE_TABLE = {
-  0: 5,
-  1: 3,
+  0: 3,
+  1: 2,
   2: 1,
 };
 
@@ -23,6 +23,7 @@ function Learning() {
   const canvasDraw = useRef(null);
   const confetti = useRef(null);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isWrong, setIsWrong] = useState(false);
   const [lastPrediction, setLastPrediction] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [failureCount, setFailureCount] = useState(0);
@@ -81,6 +82,7 @@ function Learning() {
   };
 
   const handleSubmit = async () => {
+    setIsWrong(false);
     const requestedHiragana = hiraganas[currentIndex];
     const { hiragana } = await getPrediction();
     setLastPrediction(hiragana);
@@ -90,87 +92,112 @@ function Learning() {
       return;
     }
 
+    setIsWrong(true);
     setFailureCount(failureCount + 1);
   };
 
   return (
     <div className="Learning">
+      {/********* CONFETTI *********/}
       <Confetti
         numberOfPieces={isSuccess ? 200 : 0}
         ref={confetti}
         width={width}
         height={height}
       />
-      <div className="Learning__progress">
-        <div className="Learning__progress__bar">
-          <div
-            className="Learning__progress__bar__fill"
-            style={{
-              width: `${((currentIndex + 1) / hiraganas.length) * 100}%`,
-            }}
-          />
-          {phonetics.map((_, index) => {
-            if (index % 3 === 0) {
-              return (
-                <div
-                  key={index}
-                  className={`Learning__progress__bar__item ${
-                    currentIndex >= index ? "--active" : ""
-                  }`}></div>
-              );
-            }
+      {/****************************/}
 
-            return null;
-          })}
-        </div>
-      </div>
-      <div className="Learning__info">
-        <div>
-          Time:{" "}
-          {minutes.toLocaleString("en-US", {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          })}
-          :
-          {seconds.toLocaleString("en-US", {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          })}
-        </div>
-        <div>
-          Score: {score} / {SCORE_TABLE[0] * (currentIndex + 1)}
-        </div>
-        <div>Attempt: {failureCount + 1}</div>
-        <div>Target: {hiraganas[currentIndex]}</div>
-        {lastPrediction && <div>Predict: {lastPrediction}</div>}
-      </div>
-      <div className="Learning__drawer">
-        <div className="Learning__drawer__example">
-          {hiraganas[currentIndex]}
-        </div>
-        <CanvasDraw ref={canvasDraw} brushColor="black" lazyRadius={0} />
-      </div>
-      <div className="Learning__row">
-        <div className="button blue" onClick={undo}>
-          <FaUndo />
-        </div>
-        <div className="button pink" onClick={clear}>
-          <FaEraser />
-        </div>
-        {failureCount > 2 && (
-          <div className="button red" onClick={passToNext}>
-            <FaBug />
+      {/** LEARNING HEADER */}
+      <div className="Learning__header">
+        <div className="Learning__header__row">
+          <div className="Learning__header__row__pause">
+            <FaPause />
           </div>
-        )}
-      </div>
-      <div className="Learning__row mt">
-        {failureCount > 2 && (
-          <div className="button yellow" onClick={passToNext}>
-            Pass
+          <div className="Learning__header__row__timer">
+            {minutes.toLocaleString("en-US", {
+              minimumIntegerDigits: 2,
+              useGrouping: false,
+            })}
+            :
+            {seconds.toLocaleString("en-US", {
+              minimumIntegerDigits: 2,
+              useGrouping: false,
+            })}
           </div>
-        )}
-        <div className="button green" onClick={handleSubmit}>
-          Confirm
+        </div>
+        <div className="Learning__header__row --center">
+          <div className="Learning__header__row__score">
+            {score}/{SCORE_TABLE[0] * currentIndex} <FaStar />
+          </div>
+        </div>
+      </div>
+      {/** LEARNING HEADER END */}
+
+      <div className={`Learning__drawer ${isWrong ? "--wrong" : ""}`}>
+        <div className="Learning__drawer__info">
+          <div>Target: {hiraganas[currentIndex]}</div>
+          <div>Predict: {lastPrediction ?? "?"}</div>
+        </div>
+        <div className="Learning__drawer__wrapper">
+          <div className="Learning__drawer__wrapper__example">
+            {hiraganas[currentIndex]}
+          </div>
+          <CanvasDraw
+            ref={canvasDraw}
+            brushColor="black"
+            lazyRadius={0}
+            canvasWidth={width / 1.2}
+            canvasHeight={width / 1.2}
+          />
+        </div>
+        <div className="Learning__drawer__progress">
+          <div className="Learning__drawer__progress__bar">
+            <div
+              className="Learning__drawer__progress__bar__fill"
+              style={{
+                width: `${((currentIndex + 1) / hiraganas.length) * 100}%`,
+              }}
+            />
+            {phonetics.map((_, index) => {
+              if (index % 3 === 0) {
+                return (
+                  <div
+                    key={index}
+                    className={`Learning__drawer__progress__bar__item ${
+                      currentIndex >= index ? "--active" : ""
+                    }`}></div>
+                );
+              }
+
+              return null;
+            })}
+          </div>
+        </div>
+      </div>
+
+      <div className="Learning__actions">
+        <div className="Learning__actions__row">
+          <div className="button blue" onClick={undo}>
+            <FaUndo />
+          </div>
+          <div className="button pink" onClick={clear}>
+            <FaEraser />
+          </div>
+          {failureCount > 2 && (
+            <div className="button red" onClick={passToNext}>
+              <FaBug />
+            </div>
+          )}
+        </div>
+        <div className="Learning__actions__row">
+          {failureCount > 2 && (
+            <div className="button yellow" onClick={passToNext}>
+              Pass
+            </div>
+          )}
+          <div className="button green" onClick={handleSubmit}>
+            Confirm
+          </div>
         </div>
       </div>
     </div>

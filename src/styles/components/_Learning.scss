@@ -1,36 +1,44 @@
 .Learning {
-  &__progress {
-    width: 80%;
-    margin: auto;
-    margin-bottom: $gutter;
-    border-radius: 5px;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 
-    &__bar {
+  &__header {
+    padding: $gutter calc($gutter * 2);
+    display: flex;
+    flex-direction: column;
+
+    &__row {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      height: 4px;
-      background-color: $white;
-      position: relative;
+      align-items: center;
 
-      &__fill {
-        position: absolute;
-        height: 100%;
-        background-color: $red;
-        z-index: 1;
+      &.--center {
+        justify-content: center;
       }
 
-      &__item {
-        width: 8px;
-        height: 8px;
-        background-color: $white;
-        border: 1px solid #d1d1d1;
-        border-radius: 50px;
-        z-index: 2;
+      &__pause {
+        font-size: calc($gutter * 1.5);
+        cursor: pointer;
+      }
 
-        &.--active {
-          background-color: $red;
-          border: 1px solid $red;
+      &__timer {
+        font-size: $gutter;
+        font-weight: bold;
+      }
+
+      &__score {
+        padding: calc($gutter / 2) $gutter;
+        border-radius: 10px;
+        font-size: $gutter;
+        display: flex;
+        align-items: center;
+        gap: calc($gutter / 3);
+        font-family: $japanese;
+
+        svg {
+          font-size: calc($gutter * 1.5);
         }
       }
     }
@@ -38,37 +46,116 @@
 
   &__drawer {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    flex: 2;
 
-    div {
-      border-radius: 20px;
+    &.--wrong {
+      animation: shake 0.3s ease-in-out;
+      animation-iteration-count: 3;
     }
 
-    canvas {
-      border-radius: 20px;
+    &__info {
+      display: flex;
+      justify-content: space-around;
+      width: 80%;
     }
 
-    &__example {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 350px;
-      font-family: $japanese;
-      font-weight: thin;
-      color: #00000020;
+    &__wrapper {
+      position: relative;
+      width: 100%;
+
+      div:nth-child(2) {
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      }
+
+      div {
+        border-radius: 20px;
+        margin: auto;
+      }
+
+      canvas {
+        border-radius: 20px;
+      }
+
+      &__example {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: calc($gutter * 10);
+        font-family: $japanese;
+        font-weight: thin;
+        color: #00000020;
+      }
+    }
+
+    &__progress {
+      width: 85%;
+      margin: $gutter auto;
+      border-radius: 5px;
+  
+      &__bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 6px;
+        background-color: #d1d1d1;
+        position: relative;
+  
+        &__fill {
+          position: absolute;
+          height: 100%;
+          background-color: $purple;
+          z-index: 1;
+        }
+  
+        &__item {
+          width: 12px;
+          height: 12px;
+          background-color: $white;
+          border: 1px solid #d1d1d1;
+          border-radius: 50px;
+          z-index: 2;
+  
+          &.--active {
+            background-color: $purple;
+            border: 1px solid $purple;
+          }
+        }
+      }
     }
   }
 
-  &__row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: calc($gutter / 2);
-    margin: calc($gutter / 3) 0;
+  &__actions {
+    width: 90%;
+    margin: $gutter auto;
 
-    &.mt  {
-      margin-top: $gutter;
+    &__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: calc($gutter / 2);
+      margin-bottom: calc($gutter / 2);
+
+      .button {
+        flex: 2;
+        border-radius: 8px;
+      }
     }
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0);
   }
 }
