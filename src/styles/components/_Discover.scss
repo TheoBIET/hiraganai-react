@@ -1,0 +1,110 @@
+.Discover {
+  min-height: 100vh;
+  padding: $gutter calc($gutter * 2);
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $gutter;
+
+    &__word {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: $gutter;
+
+      &__text {
+        font-size: $gutter;
+        font-family: $japanese;
+        text-align: center;
+      }
+    }
+
+    &__boxes {
+      display: flex;
+      gap: $gutter;
+      z-index: 1;
+
+      &__box {
+        background-color: $gray;
+        padding: $gutter;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+        width: $gutter * 2;
+        height: $gutter * 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        &.--active {
+          box-shadow: inset 0px 0px 0px 2px $purple;
+        }
+
+        &.--failure {
+          box-shadow: inset 0px 0px 0px 2px $red;
+        }
+
+        &.--success{
+          box-shadow: inset 0px 0px 0px 2px $green;
+        }
+
+        &:hover {
+          transform: scale(1.1) translateY(-5px);
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+      }
+    }
+
+    &__drawer {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      flex: 2;
+      justify-content: center;
+
+      &__example {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 350px;
+        font-family: $japanese;
+        font-weight: thin;
+        color: #00000020;
+      }
+
+      canvas:nth-child(1) {
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      }
+
+      div {
+        border-radius: 20px;
+        margin: auto;
+      }
+
+      canvas {
+        border-radius: 20px;
+      }
+    }
+
+    &__stepper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: $gutter;
+
+      &__arrow {
+        font-size: $gutter;
+        cursor: pointer;
+      }
+    }
+  }
+}

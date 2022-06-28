@@ -1,0 +1,192 @@
+{
+    "words": [
+        {
+            "word": {
+                "english": "Good Morning",
+                "french": "Bonjour (au matin)",
+                "japanese": "おはよう",
+                "hepburn": "Ohayô"
+            },
+            "hiraganas": [
+                {
+                    "char": "お",
+                    "phoneme": "o"
+                },
+                {
+                    "char": "は",
+                    "phoneme": "ha"
+                },
+                {
+                    "char": "よ",
+                    "phoneme": "yo"
+                },
+                {
+                    "char": "う",
+                    "phoneme": "u"
+                }
+            ]
+        },
+        {
+            "word": {
+                "english": "Good Afternoon",
+                "french": "Bon après-midi",
+                "japanese": "こんにちは",
+                "hepburn": "Konnichiwa"
+            },
+            "hiraganas": [
+                {
+                    "char": "こ",
+                    "phoneme": "ko"
+                },
+                {
+                    "char": "ん",
+                    "phoneme": "nn"
+                },
+                {
+                    "char": "に",
+                    "phoneme": "ni"
+                },
+                {
+                    "char": "ち",
+                    "phoneme": "chi"
+                },
+                {
+                    "char": "は",
+                    "phoneme": "ha"
+                }
+            ]
+        },
+        {
+            "word": {
+                "english": "Good Evening",
+                "french": "Bonsoir",
+                "japanese": "こんばんは",
+                "hepburn": "Konbanwa"
+            },
+            "hiraganas": [
+                {
+                    "char": "こ",
+                    "phoneme": "ko"
+                },
+                {
+                    "char": "ん",
+                    "phoneme": "nn"
+                },
+                {
+                    "char": "ば",
+                    "phoneme": "ba"
+                },
+                {
+                    "char": "ん",
+                    "phoneme": "nn"
+                },
+                {
+                    "char": "は",
+                    "phoneme": "ha"
+                }
+            ]
+        },
+        {
+            "word": {
+                "english": "Good Night",
+                "french": "Bonne nuit",
+                "japanese": "おやすみなさい",
+                "hepburn": "Oyasuminasai"
+            },
+            "hiraganas": [
+                {
+                    "char": "お",
+                    "phoneme": "o"
+                },
+                {
+                    "char": "や",
+                    "phoneme": "ya"
+                },
+                {
+                    "char": "す",
+                    "phoneme": "su"
+                },
+                {
+                    "char": "み",
+                    "phoneme": "mi"
+                },
+                {
+                    "char": "な",
+                    "phoneme": "na"
+                },
+                {
+                    "char": "さ",
+                    "phoneme": "sa"
+                },
+                {
+                    "char": "い",
+                    "phoneme": "i"
+                }
+            ]
+        },
+        {
+            "word": {
+                "english": "Nice to meet you",
+                "french": "Enchanté",
+                "japanese": "はじめまして",
+                "hepburn": "Hajimemashite"
+            },
+            "hiraganas": [
+                {
+                    "char": "は",
+                    "phoneme": "ha"
+                },
+                {
+                    "char": "じ",
+                    "phoneme": "ji"
+                },
+                {
+                    "char": "め",
+                    "phoneme": "me"
+                },
+                {
+                    "char": "ま",
+                    "phoneme": "ma"
+                },
+                {
+                    "char": "し",
+                    "phoneme": "shi"
+                },
+                {
+                    "char": "て",
+                    "phoneme": "te"
+                }
+            ]
+        },
+        {
+            "word": {
+                "english": "Good Bye",
+                "french": "Au revoir",
+                "japanese": "さようなら",
+                "hepburn": "Sayounara"
+            },
+            "hiraganas": [
+                {
+                    "char": "さ",
+                    "phoneme": "sa"
+                },
+                {
+                    "char": "よ",
+                    "phoneme": "yo"
+                },
+                {
+                    "char": "う",
+                    "phoneme": "u"
+                },
+                {
+                    "char": "な",
+                    "phoneme": "na"
+                },
+                {
+                    "char": "ら",
+                    "phoneme": "ra"
+                }
+            ]
+        }
+    ]
+}

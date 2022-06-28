@@ -18,7 +18,7 @@ function Landing() {
     {
       path: "/discover",
       content: "Discover Hiraganas",
-      disabled: true,
+      disabled: false,
     },
   ];
 
